@@ -18,6 +18,5 @@
            (every? #(= 1 %)))))
 
 (deftest test-large-n-doesn't-throw
-  (is (= nil ;; TODO: replace once this is fixed
-         (nth (r/rational-seq) 10000))))
+  (is (= 205/162 (nth (r/rational-seq) 10000))))
 
