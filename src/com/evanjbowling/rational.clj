@@ -5,18 +5,19 @@
   vector [numerator denominator] by navigating the
   Calkin-Wilf tree."
   [n]
-  (if (= 1 n)
+  (if (< n 2)
     [1 1]
-    (if (odd? n)
-      (let [[pn pd] (nth-rat (/ (dec n) 2))]
-        [(+' pn pd) pd])
-      (let [[pn pd] (nth-rat (/ n 2))]
-        [pn (+' pn pd)]))))
+    (let [[pn pd] (nth-rat (/ (cond-> n (odd? n) dec) 2))
+          ps (+' pn pd)]
+      (cond
+        (odd? n) [ps pd]
+        :else    [pn ps]))))
 
 (defn nth-rational
   "Returns the nth rational number."
   [n]
-  ;; TODO: add additional input validation
+  (when (or (not (integer? n)) (< n 1))
+    (throw (IllegalArgumentException. "n is not an integer > 0")))
   (let [[rn rd] (nth-rat n)]
     (/ rn rd)))
 

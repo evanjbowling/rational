@@ -17,6 +17,24 @@
            (map second)
            (every? #(= 1 %)))))
 
-(deftest test-large-n-doesn't-throw
-  (is (= 205/162 (nth (r/rational-seq) 10000))))
+(deftest test-large-n
+  (is (= 205/162
+         (nth (r/rational-seq) 10000)
+         (r/nth-rational 10001)))
+  (is (= 2142134094734576905/100081852181957676623
+         (r/nth-rational 10000000000000000000000000000000000000000000000))
+      "can handle large n such that the denominator is larger than Long/MAX_VALUE"))
+
+(deftest test-invalid-inputs
+  (are [n] (thrown-with-msg?
+             IllegalArgumentException
+             #"^n is not an integer > 0.*$"
+             (r/nth-rational n))
+    0
+   -5
+    1.1M
+    0.25
+    nil
+    "3"
+    :k))
 
