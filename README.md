@@ -1,4 +1,5 @@
 # rational
+[![Build Status](https://travis-ci.org/evanjbowling/rational.svg?branch=master)](https://travis-ci.org/evanjbowling/rational)
 
 Generate a sequence of all positive rational numbers.
 
